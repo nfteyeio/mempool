@@ -676,7 +676,7 @@ class BitcoinRoutes {
 
   private async getRbfReplacements(req: Request, res: Response) {
     try {
-      const result = rbfCache.getRbfTrees(false);
+      const result = rbfCache.getRbfTrees(false, req.params.after);
       res.json(result);
     } catch (e) {
       res.status(500).send(e instanceof Error ? e.message : e);
