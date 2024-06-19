@@ -188,11 +188,19 @@ class RbfCache {
 
   // get a paginated list of RbfTrees
   // ordered by most recent replacement time
-  public getRbfTrees(onlyFullRbf: boolean, after?: string): RbfTree[] {
-    const limit = 25;
+  public getRbfTrees(onlyFullRbf: boolean, after?: string, limitStr?: string, orderDirection?: string): RbfTree[] {
+    const limit = limitStr ? parseInt(limitStr) : 25;
+    orderDirection ||= 'desc';
+
     const trees: RbfTree[] = [];
     const used = new Set<string>();
-    const replacements: string[][] = Array.from(this.replacedBy).reverse();
+
+    let replacements: string[][] = Array.from(this.replacedBy);
+
+    if (orderDirection == "desc") {
+      replacements = replacements.reverse();
+    }
+
     const afterTree = after ? this.treeMap.get(after) : null;
     let ready = !afterTree;
     for (let i = 0; i < replacements.length && trees.length <= limit - 1; i++) {
