@@ -42,7 +42,7 @@ function set_env()
     production)
       user_name=root
       # server=162.55.87.116
-      server=5.9.208.174
+      server=136.243.43.207
       ;;
     *)
       echo "branch $branch not valid"
